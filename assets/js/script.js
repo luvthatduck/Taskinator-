@@ -131,12 +131,12 @@ var taskButtonHandler = function (event) {
 };
 
 var deleteTask = function (taskId) {
-  var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']")
+  var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
   taskSelected.remove();
 
   var updatedTaskArr = [];
 
-  for (var i = 0; i < tasks.length; i++); {
+  for (var i = 0; i < tasks.length; i++) {
     if (tasks[i].id !== parseInt(taskId)) {
       updatedTaskArr.push(tasks[i]);
     }
@@ -159,9 +159,9 @@ var editTask = function (taskId) {
   console.log(taskType);
   document.querySelector("input[name='task-name']").value = taskName;
   document.querySelector("select[name='task-type']").value = taskType;
-  document.querySelector("#save-task").textContent = "Save Task";
-
+  
   formEl.setAttribute("data-task-id", taskId);
+  formEl.querySelector("#save-task").textContent = "Save Task";
 };
 
 var completeEditTask = function (taskName, taskType, taskId) {
@@ -177,12 +177,14 @@ var completeEditTask = function (taskName, taskType, taskId) {
     }
   };
 
-  saveTasks();
+
 
   alert("Task Updated!");
 
   formEl.removeAttribute("data-task-id");
-  document.querySelector("#save-task").textContent = "Add Task";
+  formEl.querySelector("#save-task").textContent = "Add Task";
+  
+  saveTasks()
 };
 
 var taskStatusChangeHandler = function (event) {
@@ -221,20 +223,16 @@ var saveTasks = function () {
 var loadTasks = function () {
   // retrieve tasks from localstorage
   var savedTasks = localStorage.getItem("tasks");
-  console.log();
-  // if there are no tasks, set tasks to an empty array and return out of the function
+
   if (!savedTasks) {
     return false;
   }
-  console.log("Saved tasks found!");
-  // else, load up saved tasks
 
-  // parse into array of objects
+  console.log("Saved tasks found!");
   savedTasks = JSON.parse(savedTasks);
 
-  // loop through savedTasks array
+
   for (var i = 0; i < savedTasks.length; i++) {
-    // pass each task object into the `createTaskEl()` function
     createTaskEl(savedTasks[i]);
   }
 
